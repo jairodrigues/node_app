@@ -1,14 +1,22 @@
 <html>
     <body>
-        <table border="1px">
+        <table>
+            <thead>
             <tr>
                 <td>id</td>
                 <td>nome</td>
+                <td>Preco</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>livro de node js</td>
-            </tr>
+            </thead>
+            <tbody>
+            <% for (var i=0; i<lista.length; i++){ %>
+                <tr>
+                    <td><%= lista[i].id %></td>
+                    <td><%= lista[i].titulo %></td>
+                    <td><%= lista[i].preco %></td>
+                </tr>
+            <% } %>
+            </tbody>
         </table>
-    </body>
+       </body>
 </html>
