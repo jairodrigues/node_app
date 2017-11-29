@@ -3,7 +3,15 @@ module.exports = function(app){
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
         produtosDAO.lista(function(err, results){
-            res.render('produtos/lista', { lista: results });
+            res.format({
+                html: function(){
+                    res.render("produtos/lista",{lista:results});
+                },
+                json: function(){
+                    res.json(results);
+                }
+            });
+
         });
         connection.end();
     };
@@ -16,16 +24,17 @@ module.exports = function(app){
 
     app.post('/produtos', function(req,res){
         var produto = req.body;
+        console.log(produto);
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
         produtosDAO.salva(produto, function(erros,resultados){
+            console.log(erros);
             res.redirect('/produtos');
         });
     });
 
     app.get('/produtos/:id', function(req, res){
         var id = req.params.id;
-        id = id.replace(":","");
         var connection = app.infra.connectionFactory();
         var produtosDAO = new app.infra.ProdutosDAO(connection);
         produtosDAO.delete(id, function(erros, resultados){
